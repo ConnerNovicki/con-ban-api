@@ -1,0 +1,30 @@
+type User {
+  id: ID! @unique
+  firstName: String!
+  lastName: String!
+  email: String! @unique
+  username: String! @unique
+  password: String!
+  boards: [Board]
+}
+
+type Board {
+  id: ID! @unique
+  name: String!
+  columns: [Column] @relation(name: "BoardOnColumn", onDelete: CASCADE)
+  user: User!
+}
+
+type Column {
+  id: ID! @unique
+  name: String!
+  board: Board! @relation(name: "BoardOnColumn", onDelete: SET_NULL)
+  cards: [Card] @relation(name: "ColumnOnCards", onDelete: CASCADE)
+}
+
+type Card {
+  id: ID! @unique
+  name: String!
+  column: Column! @relation(name: "ColumnOnCards", onDelete: SET_NULL)
+  color: String
+}

@@ -1,0 +1,53 @@
+type AuthPayload {
+  user: User!
+  token: String!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
+  password: String!
+  boards: [Board]
+}
+
+type Board {
+  id: ID!
+  name: String!
+  columns: [Column]
+  user: User!
+}
+
+type Column {
+  id: ID!
+  name: String!
+  board: Board!
+  cards: [Card]
+}
+
+type Card {
+  id: ID!
+  name: String!
+  column: Column!
+  color: String
+}
+
+type Query {
+    getUsers: [User!]!
+    getBoardsForUser(userId: ID!): [Board!]!
+    getBoard(boardId: ID!): Board!
+}
+
+type Mutation {
+  login(username: String!, password: String!): AuthPayload!
+  createUser(firstName: String!, lastName: String!, email: String!, username: String!, password: String!): AuthPayload!
+  createBoard(name: String!, userId: ID!): Board!
+  createColumn(boardId: ID!, name: String!): Column!
+  createCard(columnId: ID!, name: String!, color: String): Card!
+  deleteColumn(id: ID!): Column!
+  deleteUserBoard(boardId: ID!): Board!
+  deleteCard(id: ID!): Card!
+  updateCard(id: ID!, name: String, color: String): Card!
+}
