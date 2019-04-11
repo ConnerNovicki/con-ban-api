@@ -41,7 +41,6 @@ const permissions = shield({
         getBoard: isAuthenticated,
     },
     Mutation: {
-        createUser: isAuthenticated,
         createBoard: and(isAuthenticated, isAuthorizedUser),
         createColumn: isAuthenticated,
         createCard: isAuthenticated,
